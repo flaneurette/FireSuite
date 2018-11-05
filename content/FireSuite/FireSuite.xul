@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://FireSuite/skin/FireSuite.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://FireSuite/locale/en-US/FireSuite.dtd">
+<overlay id="FireSuiteOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://FireSuite/content/overlay.js"></script> 
+	<!-- Right Click Menu -->
+    <popup id="contentAreaContextMenu">
+    <menuitem id="FireSuite_menu" label="FireSuite" oncommand="launchFireSuite();" />
+    </popup>
+  	<menupopup id="menu_ToolsPopup">
+    <menuitem id="FireSuite-hello" label="FireSuite" oncommand="launchFireSuite();" insertbefore="prefSep"/>
+  </menupopup>
+</overlay>

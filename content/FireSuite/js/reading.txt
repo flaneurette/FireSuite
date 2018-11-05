@@ -1,0 +1,4 @@
+// Important reading: 
+// https://developer.mozilla.org/en/Security_best_practices_in_extensions
+// https://developer.mozilla.org/en/Creating_Sandboxed_HTTP_Connections
+// https://developer.mozilla.org/en/JavaScript_code_modules/Services.jsm

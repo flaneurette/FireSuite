@@ -1,0 +1,8 @@
+<!ENTITY FireSuite.label "Your localized menuitem">
+<!ENTITY FireSuiteContext.label "Your Menuitem">
+<!ENTITY FireSuiteContext.accesskey "Y">
+<!ENTITY FireSuiteToolbarButton.label "Your Toolbar Button">
+<!ENTITY FireSuiteToolbarButton.tooltip "This is your toolbar button!">
+<!ENTITY FireSuiteSidebar.label "Your Sidebar">
+<!ENTITY FireSuiteToolbar.name  "example">
+<!ENTITY FireSuiteToolbar.label "This is an example toolbar. You can hide it under View &gt; toolbars &gt; &FireSuiteToolbar.name;">

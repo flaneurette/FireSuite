@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://FireSuite/skin/FireSuite.css?c=2" type="text/css"?>
+<window title="FireSuite" onload="window.focus();" id="window" xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+    <script src="FireSuiteOverlay.js?res=rv1.2" />
+	
+    <tabbox class="black">
+        <tabs class="ptab">
+            <tab label="Console" class="tpt"  />
+            <tab label="Tracer" class="tpt"  />
+            <tab label="Reconnaissance" class="tpt" />
+            <tab label="DNS Dig" class="tpt" />
+            <tab label="Portscan" class="tpt" />
+            <tab label="Application security" class="tpt" />
+            <tab label="Source analysis" class="tpt" />
+            <tab label="Conversion" class="tpt" />
+            <tab label="Cryptography" class="tpt" />
+
+        </tabs>
+        <tabpanels id="tabpane">
+            <tabpanel id="console" class="pftabpanel">
+                <groupbox class="pf">
+                    <textbox class="tbox" id="term" name="console" rows="22" cols="173" multiline="true" onkeyup="globals.lexer.capture(event);" curpos="100" value="$ "/>
+                    <hbox>
+                        <checkbox label="Scroll" checked="true" id="tick" class="pfitem" />
+                        <button class="pfb" flex="1" value="Copy" label="Copy" oncommand="globals.util.copy('term');" />
+                        <button class="pfb" flex="1" value="Clear" label="Clear" oncommand="globals.util.clear('term');" />
+						<button class="pfb" label="Console" value="Error console" oncommand="globals.accelerators.perform('console');" />
+						<button class="pfb" label="Profile folder" value="Profile folder" oncommand="globals.accelerators.perform('profile');" />
+						<button class="pfb" label="Disable JS" value="Disable JS" oncommand="globals.accelerators.perform('stopjs');" />
+						<button class="pfb" label="Clear memory" value="Clear memory" oncommand="globals.accelerators.perform('memory');" />
+						 <button class="pfb" label="Reload chrome" value="Reload chrome" oncommand="globals.accelerators.perform('reloadchrome');" />
+						<button class="pfb" label="Boot Firefox" value="Boot Firefox" oncommand="globals.accelerators.perform('boot');" />
+						
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="tracertab" class="pftabpanel">
+                <groupbox class="pf">
+                    <textbox class="tbox" id="tracer" name="tracer" rows="22" cols="173" multiline="true" value="" curpos="100" />
+                    <hbox>
+                        <button class="pfb" flex="1" value="Copy" label="Copy" oncommand="globals.util.copy('tracer');" />
+                        <button class="pfb" flex="1" value="Clear" label="Clear" oncommand="globals.util.clear('tracer');" />
+                        <textbox class="tbox" id="tracer.cmd" name="tracer.cmd" size="90" value="trace GET --verbose" tooltiptext="Enter commands and options. Type -help or -h for all options." />
+                        <button class="pfb" flex="1" value="Trace" label="Trace" oncommand="globals.Init.addObserver();gui.append('tracer',TRACERMSG[0]);" />
+                        <button class="pfb" flex="1" value="Abort" label="Abort" oncommand="globals.Init.removeObserver();" />
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="reconnaissance" class="pftabpanel">
+                <groupbox class="pf">
+                    <hbox>
+                        <textbox class="tbox" id="httpurl" value="http://" size="110" />
+						 <button class="pfb" flex="1" value="Ping" label="Ping" oncommand="globals.security.ping();" />
+                        <button class="pfb" flex="1" value="Head" label="Head" oncommand="globals.security.head();" />
+                        <button class="pfb" flex="1" value="Source" label="Source" oncommand="globals.security.sourcecode();" />
+						<button class="pfb" flex="1" value="RPC" label="RPC" oncommand="globals.security.rpc();" />
+                        <button class="pfb" flex="1" value="Mine" label="Mine" oncommand="globals.security.mine();" />
+                    </hbox>
+                    <textbox class="tbox" id="httpresult" name="httpresult" rows="22" cols="173" multiline="true" />
+                </groupbox>
+            </tabpanel>
+
+            <tabpanel id="dns" class="pftabpanel">
+                <groupbox class="pf">
+                    <hbox>
+                        <textbox class="tbox" id="dnsurl" value="http://" size="100" tooltiptext="Domain" />
+                        <!-- <textbox class="tbox" id="dnsserver" value="8.8.8.8" label="DNS server" tooltiptext="DNS server (IPv4 only)" size="10" />-->
+                        <button class="pfb" flex="1" value="Start" label="Start" oncommand="globals.dns.resolvedns();" />
+                    </hbox>
+                    <tree class="tbox" id="dnstree" context="outputTree2.context" enableColumnDrag="true" hidecolumnpicker="true" flex="1" minheight="257" minwidth="905" onselect="" ondblclick="">
+                        <treecols>
+                            <treecol id="urlcard" label="DNS record" flex="1" persist="width ordinal hidden" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="record" label="Address record" flex="1" persist="width ordinal hidden" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+							                            <treecol id="records" label="Address record" flex="1" persist="width ordinal hidden" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                        </treecols>
+                        <treechildren id="tree-children-dns"></treechildren>
+                    </tree>
+					<progressmeter id="progress.dns" mode="determined" value="0" class="prgss"/>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="portscan" class="pftabpanel">
+                <groupbox class="pf">
+                    <hbox>
+                        <textbox class="tbox" id="portscanurl" value="" size="110" />
+                        <textbox class="tbox" id="portscan.from" value="1" size="3" />
+                        <textbox class="tbox" id="portscan.to" value="1024" size="3" />
+                        <menulist id="socketmethod" class="pfitem">
+                            <menupopup>
+                                <menuitem label="STARTTLS" value="starttls" />
+                                <menuitem label="UDP" value="udp" />
+                                <menuitem label="SSL" value="ssl" />
+                            </menupopup>
+                        </menulist>
+                        <button class="pfb" flex="1" value="Start" label="Start" oncommand="globals.portscan.basic();" id="portsbutton" />
+                    </hbox>
+                    <tree class="tbox" id="portstree" context="portstree.context" enableColumnDrag="true" hidecolumnpicker="true" flex="1" minheight="267" minwidth="905" onselect="" ondblclick="">
+                        <treecols>
+                            <treecol label="Port" flex="1" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol label="State" flex="2" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol label="Method" flex="3" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol label="Response" flex="4" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol label="Service" flex="5" class="tree" />
+                        </treecols>
+                        <treechildren id="tree-children"></treechildren>
+                    </tree>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="application.security" class="pftabpanel">
+                <groupbox class="pf">
+                    <hbox>
+                        <textbox class="tbox" id="appsec.url" value="http://" size="70" />
+                        <checkbox label="GET" checked="true" />
+                        <checkbox label="POST" />
+                        <menulist id="application.security.menu" class="pfitem">
+                            <menupopup>
+                                <menuitem label="Select adapter..." value="0" />
+                                <menuitem label="XSS scan" value="1" />
+                                <menuitem label="SQLi scan" value="4" />
+                                <menuitem label="RFI scan" value="5" />
+                            </menupopup>
+                        </menulist>
+                        <button class="pfb" flex="1" value="Mine server" label="Mine server" oncommand="globals.security.run();" />
+                    </hbox>
+                    <tree class="tbox" id="appsec.tree" context="outputTree3.context" enableColumnDrag="true" editable="true" hidecolumnpicker="true" flex="1" minheight="270" minwidth="905" onselect="" ondblclick="">
+                        <treecols>
+                            <treecol id="appsec.uri" label="URI" flex="7" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="appsec.vector" label="Vector" flex="2" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="appsec.status" label="Status" flex="1" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="appsec.response" label="Response" flex="1" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="appsec.check" label="" flex="1" class="tree" type="checkbox" editable="true" />
+                        </treecols>
+                        <treechildren id="tree-children-appsec"></treechildren>
+                    </tree>
+                    <hbox>
+                        <button class="pfb" flex="1" value="Run vectors with checked URI's" label="Run vectors with checked URI's" oncommand="globals.util.start('source.analysis');" />
+                        <checkbox label="Uncheck all" oncommand="globals.security.rmcheckboxes();" />
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="source.analysis" class="pftabpanel">
+                <groupbox class="pf">
+                    <hbox>
+                        <menulist id="metasource" class="pfitem">
+                            <menupopup>
+                                <menuitem label="Select adapter..." value="0" />
+                                <menuitem label="All languages" value="1" />
+                                <menuitem label="Generic" value="2" />
+                                <menuitem label="HTML" value="3" />
+                                <menuitem label="PHP" value="4" />
+                                <menuitem label="Coldfusion" value="5" />
+                                <menuitem label="Python" value="6" />
+                                <menuitem label=".NET ASP" value="7" />
+                                <menuitem label="Java" value="8" />
+                                <menuitem label="J2EE" value="9" />
+                                <menuitem label="C C++" value="10" />
+                                <menuitem label="Cryptography" value="11" />
+                            </menupopup>
+                        </menulist>
+                        <button class="pfb" value="Browse..." label="Browse..." />
+                    </hbox>
+                    <tree class="tbox" id="outputTree2" context="outputTree4.context" enableColumnDrag="true" flex="1" minheight="250" minwidth="905" onselect="" ondblclick="">
+                        <treecols>
+                            <treecol id="source.analysis.id" label="Line" flex="0" persist="width ordinal hidden" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="source.analysis.line" label="Code" flex="4" persist="width ordinal hidden" class="tree" />
+                            <splitter class="tsplitt" resizeafter="farthest" />
+                            <treecol id="source.analysis.inpact" label="Impact" flex="1" persist="width ordinal hidden" class="tree" />
+                        </treecols>
+                        <treechildren />
+                    </tree>
+                    <hbox>
+                        <button class="pfb" flex="1" value="Start" label="Start" oncommand="globals.util.start('source.analysis');" />
+                        <button class="pfb" flex="1" value="Stop" label="Stop" oncommand="globals.util.stop('source.analysis');" />
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Conversion" class="pftabpanel">
+			
+			
+			                <groupbox class="pf">
+                    <textbox class="tbox" id="calcinput" name="calcinput" rows="1" cols="179" multiline="false" onkeyup="" />
+                    <textbox class="tbox" id="calcoutput" name="calcoutput" rows="1" cols="179" multiline="false" onkeyup="" />
+                    <hbox>
+                        <button class="pfbbc" value="C" label="C" oncommand="globals.calc.run('C')" />
+                        <button class="pfbb" value="1" label="1" oncommand="globals.calc.run('1')" />
+                        <button class="pfbb" value="2" label="2" oncommand="globals.calc.run('2')" />
+                        <button class="pfbb" value="/" label="/" oncommand="globals.calc.run('/')" />
+
+						
+                    </hbox>
+                    <hbox>
+                        <button class="pfbb" value="3" label="3" oncommand="globals.calc.run('3')" />
+                        <button class="pfbb" value="4" label="4" oncommand="globals.calc.run('4')" />
+                        <button class="pfbb" value="5" label="5" oncommand="globals.calc.run('5')" />
+                        <button class="pfbb" value="*" label="*" oncommand="globals.calc.run('*')" />
+						
+                    </hbox>
+                    <hbox>
+                        <button class="pfbb" value="6" label="6" oncommand="globals.calc.run('6')" />
+                        <button class="pfbb" value="7" label="7" oncommand="globals.calc.run('7')" />
+                        <button class="pfbb" value="8" label="8" oncommand="globals.calc.run('8')" />
+                        <button class="pfbb" value="-" label="-" oncommand="globals.calc.run('-')" />
+
+                    </hbox>
+                    <hbox>
+                        <button class="pfbb" value="9" label="9" oncommand="globals.calc.run('9')" />
+                        <button class="pfbb" value="0" label="0" oncommand="globals.calc.run('0')" />
+                        <button class="pfbb" value="." label="." oncommand="globals.calc.run('.')" />
+                        <button class="pfbb" value="+" label="+" oncommand="globals.calc.run('+')" />
+						
+					</hbox>	
+					<hbox>	
+						<button class="pfbb" value="%" label="%" oncommand="globals.calc.run('%');" />
+						<button class="pfbb" value="(" label="(" oncommand="globals.calc.run('(');" />
+						<button class="pfbb" value=")" label=")" oncommand="globals.calc.run(')');" />
+                        <button class="pfbr" value="=" label="=" oncommand="globals.calc.run('=');" />
+				</hbox>
+				
+				<hbox>
+                        <button class="pfbs" value="sin" label="sin" oncommand="globals.calc.run('sin')" />
+                        <button class="pfbs" value="sqrt" label="sqrt" oncommand="globals.calc.run('sqrt')" />
+                        <button class="pfbs" value="tan" label="tan" oncommand="globals.calc.run('tan')" />
+						<button class="pfbs" value="SQRT2" label="SQRT2" oncommand="globals.calc.run('SQRT2')" />
+										
+
+                 </hbox>
+				 
+				  <hbox>
+				        <button class="pfbs" value="abs" label="abs" oncommand="globals.calc.run('abs')" />
+                        <button class="pfbs" value="acos" label="acos" oncommand="globals.calc.run('acos')" />
+                        <button class="pfbs" value="asin" label="asin" oncommand="globals.calc.run('asin')" />
+                        <button class="pfbs" value="atan" label="atan" oncommand="globals.calc.run('atan')" />
+						
+					</hbox>
+					<hbox>
+                        <button class="pfbs" value="atan2" label="atan2" oncommand="globals.calc.run('atan2')" />
+						<button class="pfbs" value="E" label="E" oncommand="globals.calc.run('E')" />
+						<button class="pfbs" value="LN10" label="LN10" oncommand="globals.calc.run('LN10')" />
+						<button class="pfbs" value="PI" label="PI" oncommand="globals.calc.run('PI')" />
+						</hbox>
+						
+				 <hbox>
+				 		<button class="pfbs" value="SQRT1_2" label="SQRT1_2" oncommand="globals.calc.run('SQRT1_2')" />	
+				        <button class="pfbs" value="ceil" label="ceil" oncommand="globals.calc.run('ceil')" />
+                        <button class="pfbs" value="cos" label="cos" oncommand="globals.calc.run('cos')" />
+                        <button class="pfbs" value="exp" label="exp" oncommand="globals.calc.run('exp')" />
+                 </hbox>
+				 
+				 <hbox>						
+                        <button class="pfbs" value="floor" label="floor" oncommand="globals.calc.run('floor')" />
+                        <button class="pfbs" value="log" label="log" oncommand="globals.calc.run('log')" />
+						<button class="pfbs" value="LN2" label="LN2" oncommand="globals.calc.run('LN2')" />
+						<button class="pfbs" value="LOG10E" label="LOG10E" oncommand="globals.calc.run('LOG10E')" />
+					 </hbox>	
+						
+				 <hbox>
+				 
+				 <button class="pfbs" value="max" label="max" oncommand="globals.calc.run('max')" />
+                        <button class="pfbs" value="min" label="min" oncommand="globals.calc.run('min')" />
+                        <button class="pfbs" value="pow" label="pow" oncommand="globals.calc.run('pow')" />
+						<button class="pfbs" value="LOG2E" label="LOG2E" oncommand="globals.calc.run('LOG2E')" />
+				</hbox>
+				 <button class="pfbs" value="=" label="=" oncommand="globals.calc.run('=');" />
+                </groupbox>
+				<splitter resizeafter="farthest" class="tsplitt"></splitter>
+				
+                <groupbox class="pf">
+                   
+                    <menulist id="decoder" class="pfitem">
+                        <menupopup>
+                            <menuitem label="Select adapter..." value="Select adapter..." />
+							<menuitem label="Lower" value="2" />
+                            <menuitem label="Upper" value="3" />
+                            <menuitem label="Camel" value="10" />
+                            <menuitem label="Number lines" value="1" />
+                            <menuitem label="Count lines" value="7" />
+                            <menuitem label="Count words" value="8" />
+                            <menuitem label="Count chars" value="9" />
+                            <menuitem label="Remove empty lines" value="4" />
+                            <menuitem label="Remove linebreaks" value="5" />
+                            <menuitem label="Remove tabs" value="6" />
+                            <menuitem label="Shellcode to JS" value="shellcodetojs" />
+                            <menuitem label="Javascript pack" value="pack" />
+                            <menuitem label="Javascript unpack" value="deobfus" />
+                            <menuitem label="URL encode" value="urlencode" />
+                            <menuitem label="URL decode" value="urldecode" />
+                            <menuitem label="base64 to string" value="base642" />
+                            <menuitem label="binary to decimal" value="bin2dec" />
+                            <menuitem label="decimal to htmlentity" value="dec2ent" />
+                            <menuitem label="decimal to hexadecimal" value="dec2hex" />
+                            <menuitem label="decimal to octal" value="dec2oct" />
+                            <menuitem label="decimal to binary" value="dec2bin" />
+                            <menuitem label="hex to string" value="hex2string" />
+                            <menuitem label="hex to bytes" value="hex2bytes" />
+                            <menuitem label="string to bytes" value="string2bytes" />
+                            <menuitem label="string to hex" value="string2hex" />
+                            <menuitem label="string to charcode" value="2charcode" />
+                            <menuitem label="string to unicode" value="s2u" />
+                            <menuitem label="string to USASCII" value="2usascii" />
+                            <menuitem label="string to base 64" value="2base64" />
+                            <menuitem label="string to UTF-8" value="2utf8" />
+                            <menuitem label="UTF-8 to string" value="utf82" />
+                            <menuitem label="USASCII to string" value="usascii2" />
+                            <menuitem label="RGB to hexadecimal" value="rgb2hex" />
+                            <menuitem label="IP to DWORD" value="ip2dword" />
+                            <menuitem label="DWORD to IP" value="dec2ip" />
+                        </menupopup>
+                    </menulist>
+					 <textbox class="tbox" id="adapter" name="jscode" rows="20" cols="49" multiline="true" />
+                    <button class="pfb" label="Convert" value="Convert" oncommand="globals.util.launch();" />
+                </groupbox>
+                <splitter resizeafter="farthest" class="tsplitt"></splitter>
+                <groupbox class="pf">
+                    <textbox class="tbox" id="adapted" name="adapted" rows="22" cols="49" multiline="true" />
+                    <hbox>
+                        <button class="pfb" flex="1" value="Copy" label="Copy" oncommand="globals.util.copy('adapted');" />
+                        <button class="pfb" flex="1" value="Clear" label="Clear" oncommand="globals.util.clear('adapted');" />
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+            <tabpanel id="Crypto" class="pftabpanel">
+                <vbox flex="1" style="overflow: auto">
+                    <hbox>
+                        <groupbox flex="1" class="pf">
+                            <menulist id="hashact" cols="2" class="pfitem">
+                                <menupopup>
+                                    <menuitem label="Hash engine..." value="MD5" />
+                                    <menuitem label="MD2" value="MD2" />
+                                    <menuitem label="MD5" value="MD5" />
+                                    <menuitem label="SHA1" value="SHA1" />
+                                    <menuitem label="SHA256" value="SHA256" />
+                                    <menuitem label="SHA384" value="SHA384" />
+                                    <menuitem label="SHA512" value="SHA512" />
+                                </menupopup>
+                            </menulist>
+                            <textbox class="tbox" id="MD5" name="MD5" rows="6" cols="3" multiline="true" onkeyup="globals.util.hashvalue(this.value);" />
+                            <button class="pfb" label="Browse..." value="Browse..." oncommand="globals.util.computehash();" />
+                        </groupbox>
+                    </hbox>
+                    <hbox>
+                        <groupbox flex="1" class="pf">
+                            <menulist id="Method" class="pfitem">
+                                <menupopup>
+                                    <menuitem label="Strong Mixed" value="1" />
+                                    <menuitem label="Alpha Numeric" value="4" />
+                                    <menuitem label="Numeric" value="0" />
+                                    <menuitem label="Alpha" value="3" />
+                                    <menuitem label="Hexadecimal" value="2" />
+                                </menupopup>
+                            </menulist>
+                            <menulist id="Pass" cols="2" class="pfitem">
+                                <menupopup>
+                                    <menuitem label="Select length" value="6" />
+                                    <menuitem label="  6 chars" value="6" />
+                                    <menuitem label="  8 chars" value="8" />
+                                    <menuitem label=" 12 chars" value="12" />
+                                    <menuitem label=" 16 chars" value="16" />
+                                    <menuitem label=" 32 chars" value="32" />
+                                    <menuitem label=" 64 chars" value="64" />
+                                    <menuitem label="128 chars" value="128" />
+                                    <menuitem label="256 chars" value="256" />
+                                    <menuitem label="512 chars" value="512" />
+                                </menupopup>
+                            </menulist>
+                            <button class="pfb" label="Generate password" value="Generate Mixed Password" oncommand="globals.util.genpass();" />
+                        </groupbox>
+                    </hbox>
+                    <hbox>
+                        <groupbox flex="1" class="pf">
+                            <menulist id="Method2" flex="1" class="pfitem">
+                                <menupopup>
+                                    <menuitem label="Internal Mozilla PRNG" value="5" />
+                                    <menuitem label="Naive Math.random()" value="8" />
+                                    <menuitem label="PRNG random.org (SSL)" value="7" />
+                                    <menuitem label="PRNG radioactive decay fourmilab.ch (SSL)" value="6" />
+                                </menupopup>
+                            </menulist>
+                            <menulist id="pprng" cols="2" class="pfitem">
+                                <menupopup>
+                                    <menuitem label="Select length" value="6" />
+                                    <menuitem label="  6" value="6" />
+                                    <menuitem label="  8" value="8" />
+                                    <menuitem label=" 12" value="12" />
+                                    <menuitem label=" 16" value="16" />
+                                    <menuitem label=" 32" value="32" />
+                                    <menuitem label=" 64" value="64" />
+                                    <menuitem label="128" value="128" />
+                                    <menuitem label="256" value="256" />
+                                    <menuitem label="512" value="512" />
+                                    <menuitem label="1024" value="1024" />
+                                    <menuitem label="2048" value="2048" />
+                                </menupopup>
+                            </menulist>
+                            <button class="pfb" label="Generate numbers" value="Generate numbers" oncommand="globals.util.prng();" />
+                        </groupbox>
+                    </hbox>
+                </vbox>
+                <splitter resizeafter="farthest" class="tsplitt"></splitter>
+                <groupbox class="pf">
+                    <textbox class="tbox" id="cryptography" name="cryptography" rows="22" cols="112" multiline="true" />
+                    <hbox>
+                        <button class="pfb" flex="1" value="Copy" label="Copy" oncommand="globals.util.copy('cryptography');" />
+                        <button class="pfb" flex="1" value="Clear" label="Clear" oncommand="globals.util.clear('cryptography');" />
+                    </hbox>
+                </groupbox>
+            </tabpanel>
+
+        </tabpanels>
+    </tabbox>
+</window>

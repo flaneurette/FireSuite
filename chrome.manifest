@@ -1,0 +1,7 @@
+content FireSuite content/FireSuite/
+
+overlay chrome://browser/content/browser.xul chrome://FireSuite/content/FireSuite.xul
+
+skin FireSuite classic/1.0 skin/classic/FireSuite/
+style chrome://browser/content/browser.xul chrome://FireSuite/skin/FireSuite.css
+style chrome://global/content/customizeToolbar.xul chrome://FireSuite/skin/FireSuite.css

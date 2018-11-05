@@ -1,0 +1,295 @@
+/* Toolbar icons */
+#FireSuite-button {
+	list-style-image: url("chrome://FireSuite/skin/icon_large.png");
+}
+toolbar[iconsize="small"] #FireSuite-button {
+	list-style-image: url("chrome://FireSuite/skin/icon_small.png");
+}
+
+progressmeter {
+  -moz-appearance: none !important;
+  margin:0px;
+  padding:0px;
+  color:#ff0000;
+  background-color:#333;
+  border:1px solid #333 !important;
+  -moz-border-radius: 0.6em !important;
+  height:10px;
+}
+
+.progress-bar {
+  -moz-appearance: none !important;
+  min-width: 0px;
+  padding:0px;
+  margin-top:5px;
+  margin-left:5px;
+  background-color:#ff0000;
+  color:#ff0000;
+  -moz-border-radius: 0.3em !important;
+  height:5px;
+}
+
+.tpt {
+	padding:5px !important;
+	margin:1px !important;
+	background-color:#333 !important;
+}
+.tbox {
+	-moz-appearance:none !important;
+	width:100%;
+	color:#999999;
+	background-color:#000000 !important;
+	overflow:visible;
+	border:1px solid #333333 !important;
+}
+.pfitem {
+	-moz-appearance:none !important;
+	color:#999999;
+	background-color:#202020 !important;
+	border:1px solid #202020 !important;
+}
+.pfitembox {
+	width:99px;
+	-moz-appearance:none !important;
+	color:#999999;
+	background-color:#202020 !important;
+	border:1px solid #202020 !important;
+}
+#term {
+	background-image: url("chrome://FireSuite/skin/textbox_terminal.png");
+	background-repeat: repeat-x;
+}
+.pfitem menuitem {
+	color:#999999;
+	background-color:#202020 !important;
+	border-bottom:1px solid #333333;
+}
+.pfitem menuitem:hover {
+	background-color:#444444 !important;
+	color:#FFCC00;
+}
+.pftabpanel {
+	-moz-appearance:none !important;
+	color:#fff;
+	background-color:#000000!important;
+	border:0px !important;
+	margin:0px !important;
+}
+.pf {
+	-moz-appearance:none !important;
+	color:#fff;
+	background-color:#333333 !important;
+	border:0px !important;
+}
+.pfcalc {
+	-moz-appearance:none !important;
+	color:#fff;
+	background-color:#333333 !important;
+	border:0px !important;
+}
+.pfb {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.4em !important;
+	color:#999999;
+	background-color:#202020 !important;
+	margin-top:3px;
+	border:1px solid #202020 !important;
+	padding:0px;
+}
+.pfbb {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.9em !important;
+	color:#999999;
+	margin:1px!important;
+	padding:1px!important;
+	background-color:#202020 !important;
+	margin-top:0px;
+	border:1px solid #202020 !important;
+	padding:0px;
+	font-size:11px;
+	cursor:pointer!important;
+}
+.pfbr {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.9em !important;
+	color:green;
+	margin:1px!important;
+	padding:1px!important;
+	background-color:#202020 !important;
+	margin-top:0px;
+	border:1px solid #202020 !important;
+	padding:0px;
+	font-size:11px;
+	cursor:pointer!important;
+}
+.pfbr:hover {
+	background-color:green !important;
+	color:#fff !important;
+}
+.pfbbc {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.6em !important;
+	color:#ff0000;
+	margin:1px!important;
+	padding:1px!important;
+	background-color:#202020 !important;
+	margin-top:0px;
+	border:1px solid #202020 !important;
+	padding:0px;
+	font-size:11px;
+	cursor:pointer!important;
+}
+.pfbbc:hover {
+	background-color:#ff0000 !important;
+	color:#fff !important;
+}
+.pfbs {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.9em !important;
+	color:#999999;
+	margin:1px!important;
+	padding:1px!important;
+	background-color:#000 !important;
+	margin-top:0px;
+	border:1px solid #202020 !important;
+	padding:0px;
+	font-size:11px;
+	cursor:pointer!important;
+}
+.pfbs:hover {
+	background-color:#333 !important;
+}
+
+#calcinput {
+	
+}
+#calcoutput {
+	
+}
+.pfb:hover {
+	background-color:#000000 !important;
+	border:1px solid #000000 !important;
+	color:#FFCC00;
+}
+.tfb {
+	-moz-appearance:none !important;
+	color:#fff;
+	background-color:#202020 !important;
+	border:1px solid #202020 !important;
+}
+.tabset hbox {
+	margin:0px !important;
+}
+.black {
+	-moz-appearance:none !important;
+	background-color:#000 !important;
+	color:#fff;
+	border:0px;
+}
+.ptab {
+	-moz-appearance:none !important;
+	background-color:#202020 !important;
+	color:#fff !important;
+	border:0px !important;
+	margin:0px !important;
+	margin-top:6px !important;
+	margin-left:6px !important;
+}
+.gb {
+	-moz-appearance:none !important;
+	background-color:#fff !important;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+.gfb {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.4em !important;
+	color:#fff;
+	background-color:#fff !important;
+	border:1px solid #202020 !important;
+	margin:1px;
+	margin-right:0px;
+	margin-bottom:0px;
+	padding:0px;
+}
+.tpt {
+	-moz-appearance:none !important;
+	padding: 5px !important;
+	margin: 1px !important;
+	margin-bottom:0px !important;
+	border: 0px;
+	color: #888;
+	font-size:11px;
+	text-transform:uppercase !important;
+	text-shadow: 0 1px #000;
+}
+#tracer {
+	background-image: url("chrome://FireSuite/skin/textbox_wires.png");
+	background-repeat: repeat-x;
+}
+.tpt:hover {
+	-moz-appearance:none !important;
+	color: #000;
+	background-color:#666 !important;
+	text-shadow: 0 1px #777;
+}
+.pfs {
+	-moz-appearance:none !important;
+	background-color:#202020 !important;
+	border:0px !important;
+	width:0px;
+	margin:0px;
+	padding:0px;
+}
+.tsplitt {
+	-moz-appearance:none !important;
+	background-color:#000000 !important;
+	color:#202020 !important;
+	border:0px !important;
+	border-left:2px dotted #333333 !important;
+	margin-left:2px;
+}
+.tree {
+	-moz-appearance:none !important;
+	color:#999999;
+	background-color:#000000 !important;
+	border:1px solid #202020 !important;
+}
+
+/* this is a NO-NO! */
+
+treechildren::-moz-tree-checkbox {
+ list-style-image: none !important;
+}
+treechildren::-moz-tree-checkbox(checked) {
+ list-style-image: url("chrome://FireSuite/skin/cbox-check.gif") !important;
+}
+treechildren::-moz-tree-checkbox(disabled) {
+ list-style-image: url("chrome://FireSuite/skin/cbox-check-dis.gif") !important;
+}
+.tree-children {
+	color:#999999 !important;
+}
+.tree-children treeitem treerow {
+	-moz-appearance:none !important;
+	color:#fff !important;
+	margin-left:3px !important;
+}
+#tabpane {
+	-moz-appearance:none !important;
+	background-color:#000000 !important;
+	border:0px !important;
+	margin:0px !important;
+	padding:3px !important;
+}
+.chromedesc {
+	-moz-appearance:none !important;
+	-moz-border-radius: 0.4em !important;
+	color:#999999;
+	padding-top:5px !important;
+	padding-bottom:5px !important;
+	text-align:center;
+	text-transform:uppercase;
+	font-size:10px;
+}
